@@ -1,0 +1,26 @@
+name Python CI
+
+on
+  push
+    branches [ main ]
+  pull_request
+    branches [ main ]
+
+jobs
+  build
+    runs-on ubuntu-latest
+
+    steps
+    - name 取得程式碼
+      uses actionscheckout@v3
+
+    - name 設定 Python
+      uses actionssetup-python@v4
+      with
+        python-version '3.11'
+
+    - name 安裝依賴套件
+      run pip install -r requirements.txt
+
+    - name 執行測試
+      run pytest
